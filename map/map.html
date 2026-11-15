@@ -1,0 +1,1379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>GAIA Map — Ground Activity Intelligence & Analysis</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: #011829;
+            color: #F0F9FF;
+            overflow: hidden;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header-bar {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 10px 16px;
+            background: #011829;
+            border-bottom: 1px solid #022842;
+            z-index: 10;
+        }
+
+        .header-title-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .header-title-group h1 {
+            margin: 0;
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: -0.2px;
+            color: #54C7EC;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .header-title-group .badge {
+            background: #022842;
+            border: 1px solid #14465F;
+            color: #6E9BB5;
+            font-size: 11px;
+            padding: 2px 7px;
+            border-radius: 999px;
+            font-weight: 500;
+        }
+
+        .controls-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+        }
+
+        .control-group {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: #022842;
+            padding: 4px 8px;
+            border-radius: 6px;
+            border: 1px solid #14465F;
+        }
+
+        .control-group label {
+            color: #B2D4E6;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        select, input[type="range"] {
+            background: #011829;
+            color: #F0F9FF;
+            border: 1px solid #1B5F80;
+            border-radius: 4px;
+            padding: 3px 6px;
+            font: inherit;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        select:focus-visible {
+            outline: 2px solid #54C7EC;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 4px;
+        }
+
+        .btn {
+            background: #022842;
+            border: 1px solid #14465F;
+            color: #B2D4E6;
+            padding: 4px 9px;
+            border-radius: 5px;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            white-space: nowrap;
+        }
+
+        .btn:hover {
+            background: #14465F;
+            border-color: #1B5F80;
+        }
+
+        .btn[aria-pressed="true"], .btn.active {
+            background: #1B84AD;
+            border-color: #54C7EC;
+            color: #ffffff;
+        }
+
+        .status-badge {
+            font-size: 11px;
+            color: #6E9BB5;
+            white-space: nowrap;
+        }
+
+        .status-badge.highlight {
+            color: #fbbf24;
+        }
+
+        .map-frame {
+            flex: 1 1 auto;
+            width: 100%;
+            height: 100%;
+            min-height: 0;
+            border: 0;
+        }
+
+        /* Pipeline Modal Styles */
+        .drawer-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(6px);
+            z-index: 100;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .drawer-overlay.open {
+            display: flex;
+        }
+
+        .pipeline-modal-box {
+            background: #011829;
+            border: 1px solid #14465F;
+            border-radius: 12px;
+            width: 95%;
+            max-width: 680px;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9);
+        }
+
+        .pipeline-modal-header {
+            background: #022842;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #14465F;
+        }
+
+        .pipeline-tabs {
+            display: flex;
+            background: #022842;
+            border-bottom: 1px solid #14465F;
+            overflow-x: auto;
+        }
+
+        .pipeline-tab {
+            padding: 10px 14px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #6E9BB5;
+            cursor: pointer;
+            border: none;
+            background: transparent;
+            border-bottom: 2px solid transparent;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .pipeline-tab:hover {
+            color: #B2D4E6;
+        }
+
+        .pipeline-tab.active {
+            color: #54C7EC;
+            border-bottom-color: #54C7EC;
+            background: rgba(56, 189, 248, 0.08);
+        }
+
+        .pipeline-tab-content {
+            display: none;
+            padding: 16px;
+            overflow-y: auto;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .pipeline-tab-content.active {
+            display: flex;
+        }
+
+        .form-grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .form-grid-4 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            gap: 8px;
+        }
+
+        .form-field {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            font-size: 11px;
+        }
+
+        .form-field label {
+            color: #6E9BB5;
+            font-weight: 600;
+        }
+
+        .form-field input, .form-field select {
+            background: #011321;
+            border: 1px solid #14465F;
+            color: #F0F9FF;
+            padding: 6px 8px;
+            border-radius: 5px;
+            font-size: 12px;
+        }
+
+        .form-field input:focus, .form-field select:focus {
+            outline: none;
+            border-color: #54C7EC;
+        }
+
+        .console-box {
+            background: #011321;
+            border: 1px solid #022842;
+            border-radius: 6px;
+            padding: 10px;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            font-size: 11px;
+            line-height: 1.45;
+            color: #54C7EC;
+            max-height: 120px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+        }
+
+        /* ===== GAIA theme: matches the landing page (void / abyss / panel navy + cyan, glass panels) ===== */
+        html, body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: #011829;
+            -webkit-font-smoothing: antialiased;
+        }
+        .header-bar {
+            background:
+                linear-gradient(to right, rgba(84, 199, 236, 0.055) 1px, transparent 1px) 0 0 / 48px 48px,
+                linear-gradient(to bottom, rgba(84, 199, 236, 0.055) 1px, transparent 1px) 0 0 / 48px 48px,
+                #011829;
+            border-bottom: 1px solid rgba(84, 199, 236, 0.22);
+            box-shadow: 0 10px 30px rgba(1, 18, 31, 0.55);
+            padding: 10px 18px;
+        }
+        .brand-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: inherit;
+        }
+        .brand-link svg { width: 34px; height: 34px; flex: none; transition: transform 0.5s ease; }
+        .brand-link:hover svg { transform: rotate(12deg); }
+        .brand-text { display: flex; flex-direction: column; line-height: 1; }
+        .brand-name {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 19px;
+            letter-spacing: 0.14em;
+            color: #F0F9FF;
+        }
+        .brand-sub {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 9px;
+            letter-spacing: 0.16em;
+            color: rgba(167, 235, 242, 0.8);
+            margin-top: 5px;
+            text-transform: uppercase;
+        }
+        .header-title-group { gap: 14px; }
+        .header-title-group .badge {
+            background: rgba(2, 56, 89, 0.8);
+            border: 1px solid rgba(84, 199, 236, 0.25);
+            color: #A7EBF2;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 4px 10px;
+        }
+        .control-group {
+            background: rgba(2, 56, 89, 0.62);
+            -webkit-backdrop-filter: blur(16px);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(84, 199, 236, 0.22);
+            border-radius: 10px;
+            padding: 5px 10px;
+            box-shadow: inset 0 1px 0 rgba(167, 235, 242, 0.1);
+        }
+        .control-group label, .form-field label { font-family: 'Inter', sans-serif; }
+        select, input[type="range"], .form-field input, .form-field select {
+            background: #011829;
+            border: 1px solid rgba(84, 199, 236, 0.28);
+            color: #F0F9FF;
+            border-radius: 6px;
+        }
+        select:focus-visible, .form-field input:focus, .form-field select:focus {
+            outline: 2px solid #54C7EC;
+            border-color: #54C7EC;
+        }
+        input[type="checkbox"] { accent-color: #54C7EC; }
+        input[type="range"] { accent-color: #54C7EC; }
+        .btn {
+            background: rgba(2, 56, 89, 0.72);
+            border: 1px solid rgba(167, 235, 242, 0.3);
+            color: #F0F9FF;
+            border-radius: 8px;
+            padding: 5px 11px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 500;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .btn:hover {
+            background: rgba(84, 199, 236, 0.16);
+            border-color: #A7EBF2;
+            transform: translateY(-1px);
+        }
+        .btn[aria-pressed="true"], .btn.active, #btn-open-pipeline {
+            background: linear-gradient(135deg, #54C7EC 0%, #269CC4 100%) !important;
+            border-color: #A7EBF2 !important;
+            color: #011829 !important;
+            font-weight: 600 !important;
+            box-shadow: 0 0 18px rgba(84, 199, 236, 0.35);
+        }
+        #btn-open-pipeline:hover { box-shadow: 0 0 28px rgba(167, 235, 242, 0.55); }
+        .status-badge { font-family: 'JetBrains Mono', monospace; font-size: 10px; }
+        .drawer-overlay { background: rgba(1, 24, 41, 0.82); }
+        .pipeline-modal-box {
+            background: rgba(2, 40, 66, 0.96);
+            border: 1px solid rgba(84, 199, 236, 0.28);
+            box-shadow: 0 25px 60px rgba(1, 18, 31, 0.85), 0 0 40px rgba(84, 199, 236, 0.12);
+        }
+        .pipeline-modal-header { background: rgba(2, 56, 89, 0.7); border-bottom: 1px solid rgba(84, 199, 236, 0.22); }
+        .pipeline-tabs { background: rgba(2, 56, 89, 0.55); border-bottom: 1px solid rgba(84, 199, 236, 0.22); }
+        .pipeline-tab { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; }
+        .pipeline-tab.active { background: rgba(84, 199, 236, 0.1); }
+        .console-box { font-family: 'JetBrains Mono', ui-monospace, Consolas, monospace; border-color: rgba(84, 199, 236, 0.2); }
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #011829; }
+        ::-webkit-scrollbar-thumb { background: #034B75; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #54C7EC; }
+    </style>
+</head>
+<body>
+    <header class="header-bar">
+        <div class="header-title-group">
+            <a class="brand-link" href="../index.html" title="Back to GAIA home">
+                <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <circle cx="22" cy="22" r="19" stroke="#54C7EC" stroke-opacity="0.28" stroke-width="1"/>
+                    <ellipse cx="22" cy="22" rx="19" ry="7.5" transform="rotate(-28 22 22)" stroke="#54C7EC" stroke-width="1.4"/>
+                    <circle cx="22" cy="22" r="9.5" fill="url(#gaiaMapGrad)" stroke="#A7EBF2" stroke-width="1.2"/>
+                    <path d="M18 15.5C19.5 18 19 21 21 23.5C22.5 25.5 21 28 20 29.5" stroke="#011829" stroke-width="1.5" stroke-linecap="round"/>
+                    <circle cx="36" cy="14" r="2.2" fill="#A7EBF2"/>
+                    <defs><linearGradient id="gaiaMapGrad" x1="13" y1="13" x2="31" y2="31" gradientUnits="userSpaceOnUse"><stop stop-color="#54C7EC"/><stop offset="1" stop-color="#023859"/></linearGradient></defs>
+                </svg>
+                <span class="brand-text">
+                    <span class="brand-name">GAIA</span>
+                    <span class="brand-sub">Ground Activity Intelligence &amp; Analysis</span>
+                </span>
+            </a>
+            <span class="badge" id="data-status-badge">InSAR + USGS Live</span>
+        </div>
+
+        <div class="controls-row">
+            <!-- Basemap Selection -->
+            <div class="control-group">
+                <span style="color:#6E9BB5; font-size:11px;">Basemap:</span>
+                <div class="btn-group" aria-label="Basemap style">
+                    <button class="btn map-option" type="button" data-map="tectonic_terrain.html" aria-pressed="true">Terrain</button>
+                    <button class="btn map-option" type="button" data-map="tectonic_satellite.html" aria-pressed="false">Satellite</button>
+                    <button class="btn map-option" type="button" data-map="tectonic_topo.html" aria-pressed="false">Topo</button>
+                    <button class="btn map-option" type="button" data-map="tectonic_osm.html" aria-pressed="false">Street</button>
+                </div>
+            </div>
+
+            <!-- View Presets -->
+            <div class="control-group">
+                <span style="color:#6E9BB5; font-size:11px;">View:</span>
+                <button class="btn" id="btn-fit-swath" title="Fit to active InSAR radar swath">🎯 InSAR Swath</button>
+                <button class="btn" id="btn-view-rift" title="Focus on the East African Rift system">🌋 East African Rift</button>
+                <button class="btn" id="btn-view-addis" title="Focus on Addis Ababa city">🏙️ Addis Ababa</button>
+                <button class="btn" id="btn-view-global" title="Global Plate Tectonics">🌍 Global</button>
+            </div>
+
+            <!-- InSAR Deformation Layer Controls -->
+            <div class="control-group">
+                <label>
+                    <input id="deformation-overlay" type="checkbox" checked disabled>
+                    InSAR Layer:
+                </label>
+                <select id="overlay-layer" disabled style="max-width: 220px;">
+                    <option>Loading NISAR layers…</option>
+                </select>
+                <span style="color:#6E9BB5; font-size:11px;">Opacity:</span>
+                <input id="overlay-opacity" type="range" min="0.2" max="1.0" step="0.05" value="0.75" style="width: 70px;" title="Layer opacity">
+            </div>
+
+            <!-- USGS Earthquakes Control -->
+            <div class="control-group">
+                <label>
+                    <input id="earthquake-toggle" type="checkbox" checked>
+                    ⚡ Earthquakes:
+                </label>
+                <select id="earthquake-mag" title="Minimum Magnitude">
+                    <option value="2.5" selected>M2.5+</option>
+                    <option value="4.0">M4.0+ Strong</option>
+                    <option value="5.0">M5.0+ Major</option>
+                </select>
+                <select id="earthquake-period" title="Time window">
+                    <option value="week">Past 7 Days</option>
+                    <option value="month" selected>Past 30 Days</option>
+                </select>
+                <span class="status-badge highlight" id="eq-count-badge">Loading...</span>
+            </div>
+
+            <!-- Active Faults Control -->
+            <div class="control-group">
+                <label>
+                    <input id="faults-toggle" type="checkbox" checked>
+                    Active Faults
+                </label>
+            </div>
+
+            <!-- Pipeline Control Center Button -->
+            <button class="btn" id="btn-open-pipeline" style="background:#1B84AD; border-color:#54C7EC; color:#ffffff; font-weight:600;">
+                ⚙️ InSAR Pipeline Controls
+            </button>
+        </div>
+    </header>
+
+    <iframe class="map-frame" id="map-frame" src="tectonic_terrain.html?mapLat=9.0&mapLng=38.75&mapZoom=6" title="NISAR Tectonic Deformation Map"></iframe>
+
+    <!-- Pipeline Control Center Modal -->
+    <div class="drawer-overlay" id="pipeline-modal">
+        <div class="pipeline-modal-box">
+            <div class="pipeline-modal-header">
+                <div style="display:flex; align-items:center; gap:8px; font-size:14px; font-weight:700; color:#54C7EC;">
+                    ⚙️ InSAR & Earthquake Pipeline Control Center
+                </div>
+                <button class="btn" id="btn-close-pipeline" style="padding:2px 8px; font-weight:700;">✕</button>
+            </div>
+
+            <!-- Tab Navigation -->
+            <div class="pipeline-tabs">
+                <button class="pipeline-tab active" data-target="tab-trigger">
+                    ⚡ 1. Earthquake Trigger
+                </button>
+                <button class="pipeline-tab" data-target="tab-search">
+                    🛰️ 2. NASA ASF Search
+                </button>
+                <button class="pipeline-tab" data-target="tab-process">
+                    🔬 3. Phase & Coherence
+                </button>
+                <button class="pipeline-tab" data-target="tab-auth">
+                    🔑 4. Earthdata Token
+                </button>
+            </div>
+
+            <!-- Tab 1: Earthquake Auto-Trigger -->
+            <div class="pipeline-tab-content active" id="tab-trigger">
+                <div style="font-size:12px; color:#B2D4E6; line-height:1.4;">
+                    Pings real-time USGS feeds, extracts earthquake epicenters, calculates co-seismic windows (±12 days), and matches NISAR granules.
+                </div>
+                <div class="form-grid-2">
+                    <div class="form-field">
+                        <label>USGS Live Feed</label>
+                        <select id="ctrl-trigger-feed">
+                            <option value="4.5_month" selected>M 4.5+ (Past Month)</option>
+                            <option value="significant_month">Significant Events (Past Month)</option>
+                            <option value="4.5_week">M 4.5+ (Past 7 Days)</option>
+                            <option value="2.5_month">M 2.5+ (Past Month)</option>
+                        </select>
+                    </div>
+                    <div class="form-field">
+                        <label>Minimum Magnitude Threshold</label>
+                        <input type="number" id="ctrl-trigger-mag" value="4.5" min="2.0" max="8.0" step="0.1">
+                    </div>
+                </div>
+                <div class="form-grid-2">
+                    <div class="form-field">
+                        <label>Epicenter Radius (degrees)</label>
+                        <input type="number" id="ctrl-trigger-radius" value="1.0" min="0.2" max="5.0" step="0.2">
+                    </div>
+                    <div class="form-field">
+                        <label>Co-Seismic Temporal Window</label>
+                        <select id="ctrl-trigger-window">
+                            <option value="12" selected>± 12 Days (NISAR Repeat Cycle)</option>
+                            <option value="24">± 24 Days (Two Cycles)</option>
+                            <option value="36">± 36 Days (Three Cycles)</option>
+                        </select>
+                    </div>
+                </div>
+                <div style="display:flex; gap:8px; margin-top:4px;">
+                    <button class="btn" id="btn-run-trigger" style="flex:1; justify-content:center; background:#1B84AD; border-color:#54C7EC; color:#fff; font-weight:600;">
+                        ⚡ Run Auto-Trigger & Co-Seismic Match
+                    </button>
+                </div>
+            </div>
+
+            <!-- Tab 2: NASA ASF Search -->
+            <div class="pipeline-tab-content" id="tab-search">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <span style="font-size:12px; color:#B2D4E6;">Spatial Bounding Box (Decimal Degrees)</span>
+                    <button class="btn" id="btn-fill-map-bbox" style="font-size:11px; padding:3px 8px; color:#54C7EC; border-color:#1B84AD;">
+                        📍 Use Current Map View
+                    </button>
+                </div>
+                <!-- Tectonic zone quick-select presets -->
+                <div style="margin:6px 0 2px; font-size:11px; color:#6E9BB5; font-weight:600; letter-spacing:0.04em;">🌋 EARS Tectonic Zone Presets <span style="font-weight:400; color:#6E9BB5;">(click to fill bbox)</span></div>
+                <div style="display:flex; flex-wrap:wrap; gap:5px; margin-bottom:8px;" id="zone-preset-btns">
+                    <button class="btn zone-preset" data-w="39.0" data-s="10.0" data-e="43.5" data-n="15.0"
+                        style="font-size:10px; padding:3px 7px; color:#fbbf24; border-color:#d97706;"
+                        title="Afar Triangle — 32 active faults | hotspot triple junction">
+                        🔥 Afar Triangle
+                    </button>
+                    <button class="btn zone-preset" data-w="36.5" data-s="4.0" data-e="42.0" data-n="12.0"
+                        style="font-size:10px; padding:3px 7px; color:#54C7EC; border-color:#1B84AD;"
+                        title="Main Ethiopian Rift — 114 active faults | includes Addis Ababa">
+                        🇪🇹 Ethiopian Rift
+                    </button>
+                    <button class="btn zone-preset" data-w="34.5" data-s="-3.0" data-e="38.5" data-n="4.0"
+                        style="font-size:10px; padding:3px 7px; color:#34d399; border-color:#059669;"
+                        title="Gregory Rift Kenya — 55 active faults | Rift Valley">
+                        🇰🇪 Gregory Rift
+                    </button>
+                    <button class="btn zone-preset" data-w="28.0" data-s="-4.0" data-e="32.5" data-n="2.5"
+                        style="font-size:10px; padding:3px 7px; color:#c084fc; border-color:#7c3aed;"
+                        title="Western Rift — 54 active faults | Uganda, Rwanda, DRC">
+                        🌊 Western Rift
+                    </button>
+                    <button class="btn zone-preset" data-w="32.0" data-s="-12.0" data-e="37.5" data-n="-2.0"
+                        style="font-size:10px; padding:3px 7px; color:#fb923c; border-color:#ea580c;"
+                        title="Tanzania Craton / Southern Rift — 81 active faults">
+                        🏔️ Tanzania Rift
+                    </button>
+                    <button class="btn zone-preset" data-w="32.5" data-s="-18.0" data-e="36.5" data-n="-10.0"
+                        style="font-size:10px; padding:3px 7px; color:#f472b6; border-color:#db2777;"
+                        title="Mozambique / Malawi Rift — 152 active faults">
+                        🌋 Mozambique Rift
+                    </button>
+                    <button class="btn zone-preset" data-w="25.4" data-s="-18.8" data-e="50.1" data-n="17.4"
+                        style="font-size:10px; padding:3px 7px; color:#B2D4E6; border-color:#1B5F80;"
+                        title="Full EARS — all 490 fault segments across East Africa">
+                        🌍 Full EARS
+                    </button>
+                </div>
+                <div class="form-grid-4">
+                    <div class="form-field">
+                        <label>West (Min Lon)</label>
+                        <input type="number" id="ctrl-bbox-west" value="36.0" step="0.1">
+                    </div>
+                    <div class="form-field">
+                        <label>South (Min Lat)</label>
+                        <input type="number" id="ctrl-bbox-south" value="4.0" step="0.1">
+                    </div>
+                    <div class="form-field">
+                        <label>East (Max Lon)</label>
+                        <input type="number" id="ctrl-bbox-east" value="42.0" step="0.1">
+                    </div>
+                    <div class="form-field">
+                        <label>North (Max Lat)</label>
+                        <input type="number" id="ctrl-bbox-north" value="12.0" step="0.1">
+                    </div>
+                </div>
+                <div class="form-grid-2">
+                    <div class="form-field">
+                        <label>Start Date</label>
+                        <input type="date" id="ctrl-start-date" value="2026-10-01">
+                    </div>
+                    <div class="form-field">
+                        <label>End Date</label>
+                        <input type="date" id="ctrl-end-date" value="2026-11-14">
+                    </div>
+                </div>
+                <div class="form-grid-2">
+                    <div class="form-field">
+                        <label>Viewing Geometry (Flight Direction)</label>
+                        <select id="ctrl-orbit-direction">
+                            <option value="">Both (Ascending & Descending)</option>
+                            <option value="ASCENDING">Ascending (Looking East)</option>
+                            <option value="DESCENDING">Descending (Looking West)</option>
+                        </select>
+                    </div>
+                    <div class="form-field">
+                        <label>Data Release Maturity</label>
+                        <select id="ctrl-maturity">
+                            <option value="PROVISIONAL" selected>PROVISIONAL (Science / Early Release)</option>
+                            <option value="VALIDATED">VALIDATED (Calibrated Standard)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div style="background:rgba(15,23,42,0.6); padding:10px; border-radius:6px; border:1px solid #14465F; margin-bottom:10px; display:flex; flex-direction:column; gap:6px;">
+                    <label style="display:flex; align-items:center; gap:8px; font-size:12px; cursor:pointer;">
+                        <input type="checkbox" id="ctrl-dry-run" checked>
+                        <span><b style="color:#54C7EC;">Dry-Run Only (Search & Discover)</b> — Uncheck to download & process matching granules</span>
+                    </label>
+                    <label style="display:flex; align-items:center; gap:8px; font-size:12px; cursor:pointer;">
+                        <input type="checkbox" id="ctrl-latest-pair-only" checked>
+                        <span><b>Latest-Pair Only</b> — Target only the single latest co-seismic acquisition pair</span>
+                    </label>
+                    <div style="display:flex; align-items:center; justify-content:space-between; margin-top:4px; font-size:12px; border-top:1px solid #14465F; padding-top:6px;">
+                        <span><b style="color:#a78bfa;">🎯 Granules to Process:</b></span>
+                        <select id="ctrl-granule-limit" style="background:#022842; color:#F0F9FF; border:1px solid #1B5F80; border-radius:4px; padding:3px 6px; font-size:11px; cursor:pointer;">
+                            <option value="1" selected>🎯 1 Granule (Fastest ~45s — Target Center)</option>
+                            <option value="2">✌️ 2 Granules (~1.5 min — Core Swath)</option>
+                            <option value="all">🌐 All Granules in Pair (~18 GB)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div style="display:flex; gap:8px;">
+                    <button class="btn" id="btn-run-search" style="flex:1; justify-content:center; background:#1B84AD; border-color:#54C7EC; color:#fff; font-weight:600;">
+                        🔍 Execute NASA ASF Search / Download
+                    </button>
+                    <button class="btn" id="btn-clip-faults-only" style="color:#fbbf24; border-color:#f59e0b;">
+                        ✂️ Clip Faults to BBox
+                    </button>
+                </div>
+            </div>
+
+            <!-- Tab 3: Phase & Coherence Processor -->
+            <div class="pipeline-tab-content" id="tab-process">
+                <div class="form-grid-2">
+                    <div class="form-field">
+                        <label>Minimum Coherence Threshold (<span id="ctrl-coherence-val">0.30</span>)</label>
+                        <input type="range" id="ctrl-coherence" min="0.10" max="0.80" step="0.05" value="0.30">
+                        <span style="font-size:10px; color:#6E9BB5;">Masks vegetated/water noise below this value</span>
+                    </div>
+                    <div class="form-field">
+                        <label>Symmetric Color Range (± cm)</label>
+                        <input type="number" id="ctrl-range-cm" value="10.0" min="1.0" max="100.0" step="1.0">
+                        <span style="font-size:10px; color:#6E9BB5;">98th percentile default is 10.0 cm</span>
+                    </div>
+                </div>
+                <div style="display:flex; flex-direction:column; gap:8px; font-size:12px; margin-top:4px;">
+                    <label style="display:flex; align-items:center; gap:8px;">
+                        <input type="checkbox" id="ctrl-process-delete" checked>
+                        <span><b>Process & Delete Raw HDF5</b> (Conserves disk space by keeping only GeoTIFFs)</span>
+                    </label>
+                    <label style="display:flex; align-items:center; gap:8px;">
+                        <input type="checkbox" id="ctrl-decomp-2d">
+                        <span><b>2D Vector Decomposition</b> (Separates pure vertical uplift from E-W plate motion)</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Tab 4: Earthdata Token -->
+            <div class="pipeline-tab-content" id="tab-auth">
+                <div style="font-size:12px; color:#B2D4E6; line-height:1.4;">
+                    NASA Earthdata Bearer Token allows direct downloads of raw NISAR HDF5 granules from the Alaska Satellite Facility cloud.
+                </div>
+                <div style="display:flex; align-items:center; gap:8px;">
+                    <span style="font-size:11px; color:#6E9BB5;">Current Status:</span>
+                    <span class="badge" id="token-status-pill">Checking...</span>
+                </div>
+                <div class="form-field">
+                    <label>Bearer Token</label>
+                    <input type="password" id="ctrl-token-input" placeholder="Paste your Earthdata Bearer Token here...">
+                </div>
+                <div style="display:flex; gap:8px;">
+                    <button class="btn" id="btn-save-token" style="flex:1; justify-content:center; background:#10b981; border-color:#059669; color:#fff; font-weight:600;">
+                        💾 Save Token Safely
+                    </button>
+                </div>
+            </div>
+
+            <!-- Console Log Output -->
+            <div style="background:#011321; border-top:1px solid #022842; padding:12px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                    <span style="font-size:11px; font-weight:700; color:#6E9BB5; text-transform:uppercase;">
+                        📟 Pipeline Execution Console
+                    </span>
+                    <button class="btn" id="btn-refresh-map" style="font-size:10px; padding:2px 8px; color:#54C7EC; border-color:#1B84AD;">
+                        🔄 Reload Map Layers
+                    </button>
+                </div>
+                <!-- Live Progress Bar -->
+                <div id="progress-container" style="display:none; margin-bottom:10px; background:#011829; border:1px solid #14465F; border-radius:6px; padding:10px 12px; box-shadow:0 2px 8px rgba(0,0,0,0.5);">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; font-size:12px;">
+                        <span id="progress-status-text" style="color:#54C7EC; font-weight:600; display:flex; align-items:center; gap:6px;">
+                            <span class="spinner" id="progress-spinner" style="display:inline-block; width:10px; height:10px; border:2px solid #54C7EC; border-top-color:transparent; border-radius:50%; animation:spin 0.8s linear infinite;"></span>
+                            Connecting to NASA ASF Cloud...
+                        </span>
+                        <span id="progress-percent-badge" style="color:#F0F9FF; font-weight:700; background:#1B84AD; padding:2px 8px; border-radius:12px; font-size:11px; letter-spacing:0.02em;">0%</span>
+                    </div>
+                    <div style="width:100%; height:8px; background:#022842; border-radius:4px; overflow:hidden; position:relative;">
+                        <div id="progress-bar-fill" style="width:0%; height:100%; background:linear-gradient(90deg, #1B84AD, #54C7EC, #10b981); transition:width 0.3s ease; border-radius:4px;"></div>
+                    </div>
+                    <div id="progress-detail-text" style="font-size:11px; color:#6E9BB5; margin-top:5px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Initialising task...</div>
+                </div>
+                <div class="console-box" id="pipeline-console">InSAR Hazard Sentinel Web Console ready. Select an action above to execute.</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const mapFrame = document.getElementById("map-frame");
+        const mapOptions = document.querySelectorAll(".map-option");
+        const overlayToggle = document.getElementById("deformation-overlay");
+        const overlayLayerSelect = document.getElementById("overlay-layer");
+        const overlayOpacitySlider = document.getElementById("overlay-opacity");
+        const earthquakeToggle = document.getElementById("earthquake-toggle");
+        const earthquakeMagSelect = document.getElementById("earthquake-mag");
+        const earthquakePeriodSelect = document.getElementById("earthquake-period");
+        const eqCountBadge = document.getElementById("eq-count-badge");
+        const faultsToggle = document.getElementById("faults-toggle");
+
+        // View navigation buttons
+        const btnFitSwath = document.getElementById("btn-fit-swath");
+        const btnViewRift = document.getElementById("btn-view-rift");
+        const btnViewAddis = document.getElementById("btn-view-addis");
+        const btnViewGlobal = document.getElementById("btn-view-global");
+
+        let mapView = { lat: 9.0, lng: 38.75, zoom: 6 };
+        let mapToken = 0;
+        let overlayLayers = [];
+
+        window.addEventListener("message", (event) => {
+            const data = event.data;
+            if (event.source !== mapFrame.contentWindow || !data) {
+                return;
+            }
+
+            if (data.type === "raster-overlay-ready") {
+                overlayLayers = data.layers || [];
+                overlayLayerSelect.replaceChildren();
+                overlayLayers.forEach((layer) => {
+                    const option = document.createElement("option");
+                    option.value = layer.name;
+                    option.textContent = layer.label;
+                    overlayLayerSelect.append(option);
+                });
+
+                overlayLayerSelect.disabled = false;
+                overlayToggle.disabled = false;
+                if (overlayLayers.length > 0) {
+                    overlayLayerSelect.value = overlayLayers[0].name;
+                }
+                updateOverlay();
+
+                // Auto-fit map to actual overlay bounds so user can see the data
+                setTimeout(() => {
+                    mapFrame.contentWindow.postMessage({ type: "fit-overlay-bounds" }, "*");
+                }, 600);
+                return;
+            }
+
+            if (data.type === "raster-overlay-error") {
+                overlayToggle.checked = false;
+                overlayToggle.disabled = true;
+                overlayLayerSelect.disabled = true;
+                return;
+            }
+
+            if (data.type === "earthquakes-status") {
+                if (data.loading) {
+                    eqCountBadge.textContent = "Fetching USGS...";
+                } else if (data.error) {
+                    eqCountBadge.textContent = "Offline";
+                } else {
+                    eqCountBadge.textContent = `${data.count} Events`;
+                }
+                return;
+            }
+
+            if (
+                data.type === "map-view" &&
+                data.token === mapToken &&
+                Number.isFinite(data.lat) &&
+                Number.isFinite(data.lng) &&
+                Number.isFinite(data.zoom)
+            ) {
+                mapView = { lat: data.lat, lng: data.lng, zoom: data.zoom };
+            }
+        });
+
+        const updateOverlay = () => {
+            mapFrame.contentWindow.postMessage(
+                {
+                    type: "deformation-overlay",
+                    enabled: overlayToggle.checked,
+                    layer: overlayLayerSelect.value,
+                    opacity: parseFloat(overlayOpacitySlider.value)
+                },
+                "*"
+            );
+        };
+
+        const updateEarthquakes = () => {
+            mapFrame.contentWindow.postMessage(
+                {
+                    type: "earthquakes-config",
+                    enabled: earthquakeToggle.checked,
+                    minMag: earthquakeMagSelect.value,
+                    period: earthquakePeriodSelect.value
+                },
+                "*"
+            );
+        };
+
+        const updateFaults = () => {
+            mapFrame.contentWindow.postMessage(
+                {
+                    type: "faults-toggle",
+                    enabled: faultsToggle.checked
+                },
+                "*"
+            );
+        };
+
+        mapFrame.addEventListener("load", () => {
+            updateOverlay();
+            updateEarthquakes();
+            updateFaults();
+        });
+
+        overlayToggle.addEventListener("change", updateOverlay);
+        overlayLayerSelect.addEventListener("change", updateOverlay);
+        overlayOpacitySlider.addEventListener("input", updateOverlay);
+        earthquakeToggle.addEventListener("change", updateEarthquakes);
+        earthquakeMagSelect.addEventListener("change", updateEarthquakes);
+        earthquakePeriodSelect.addEventListener("change", updateEarthquakes);
+        faultsToggle.addEventListener("change", updateFaults);
+
+        // View Navigation Presets
+        btnFitSwath.addEventListener("click", () => {
+            mapFrame.contentWindow.postMessage({ type: "fit-overlay-bounds" }, "*");
+        });
+
+        btnViewRift.addEventListener("click", () => {
+            mapFrame.contentWindow.postMessage({ type: "set-view", lat: 8.5, lng: 39.0, zoom: 6 }, "*");
+        });
+
+        btnViewAddis.addEventListener("click", () => {
+            mapFrame.contentWindow.postMessage({ type: "set-view", lat: 8.981, lng: 38.757, zoom: 12 }, "*");
+        });
+
+        btnViewGlobal.addEventListener("click", () => {
+            mapFrame.contentWindow.postMessage({ type: "set-view", lat: 15.0, lng: 35.0, zoom: 3 }, "*");
+        });
+
+        // Basemap Switcher
+        mapOptions.forEach((option) => {
+            option.addEventListener("click", () => {
+                mapToken += 1;
+                const params = new URLSearchParams({
+                    mapLat: String(mapView.lat),
+                    mapLng: String(mapView.lng),
+                    mapZoom: String(mapView.zoom),
+                    mapToken: String(mapToken)
+                });
+                mapFrame.src = `${option.dataset.map}?${params}`;
+                mapOptions.forEach((item) => {
+                    item.setAttribute("aria-pressed", String(item === option));
+                });
+            });
+        });
+
+        // ==========================================
+        // InSAR Pipeline Control Center Modal Logic
+        // ==========================================
+        const API_BASE = window.location.origin.startsWith("http") ? window.location.origin : "http://127.0.0.1:8000";
+
+        // Safe JSON response reader that prevents "Unexpected token <" HTML parsing errors
+        const safeJson = async (res) => {
+            const contentType = res.headers.get("content-type") || "";
+            if (contentType.includes("application/json")) {
+                try {
+                    return await res.json();
+                } catch (e) {
+                    return { success: false, error: "Invalid JSON received from server." };
+                }
+            }
+            const text = await res.text();
+            // Extract clean title or text if HTML was returned
+            const match = text.match(/<title>(.*?)<\/title>/i);
+            const errSummary = match ? match[1] : (text.slice(0, 160) || `HTTP ${res.status} ${res.statusText}`);
+            return { success: false, error: errSummary };
+        };
+        const pipelineModal = document.getElementById("pipeline-modal");
+        const btnOpenPipeline = document.getElementById("btn-open-pipeline");
+        const btnClosePipeline = document.getElementById("btn-close-pipeline");
+        const pipelineTabs = document.querySelectorAll(".pipeline-tab");
+        const pipelineTabContents = document.querySelectorAll(".pipeline-tab-content");
+        const pipelineConsole = document.getElementById("pipeline-console");
+        const btnRefreshMap = document.getElementById("btn-refresh-map");
+
+        // Form Inputs
+        const btnFillMapBbox = document.getElementById("btn-fill-map-bbox");
+        const ctrlBboxWest = document.getElementById("ctrl-bbox-west");
+        const ctrlBboxSouth = document.getElementById("ctrl-bbox-south");
+        const ctrlBboxEast = document.getElementById("ctrl-bbox-east");
+        const ctrlBboxNorth = document.getElementById("ctrl-bbox-north");
+        const ctrlStartDate = document.getElementById("ctrl-start-date");
+        const ctrlEndDate = document.getElementById("ctrl-end-date");
+        const ctrlOrbitDir = document.getElementById("ctrl-orbit-direction");
+        const ctrlMaturity = document.getElementById("ctrl-maturity");
+        const ctrlDryRun = document.getElementById("ctrl-dry-run");
+        const ctrlLatestPairOnly = document.getElementById("ctrl-latest-pair-only");
+        const ctrlCoherence = document.getElementById("ctrl-coherence");
+        const ctrlCoherenceVal = document.getElementById("ctrl-coherence-val");
+
+        // Action Buttons
+        const btnRunTrigger = document.getElementById("btn-run-trigger");
+        const btnRunSearch = document.getElementById("btn-run-search");
+        const btnClipFaultsOnly = document.getElementById("btn-clip-faults-only");
+        const btnSaveToken = document.getElementById("btn-save-token");
+        const ctrlTokenInput = document.getElementById("ctrl-token-input");
+        const tokenStatusPill = document.getElementById("token-status-pill");
+
+        const logConsole = (text, level = "info") => {
+            const time = new Date().toLocaleTimeString();
+            const prefix = level === "error" ? "❌ " : level === "success" ? "✅ " : "ℹ️ ";
+            pipelineConsole.textContent += `\n[${time}] ${prefix}${text}`;
+            pipelineConsole.scrollTop = pipelineConsole.scrollHeight;
+        };
+
+        // Open/Close Modal
+        btnOpenPipeline.addEventListener("click", () => {
+            pipelineModal.classList.add("open");
+            checkTokenStatus();
+        });
+        btnClosePipeline.addEventListener("click", () => pipelineModal.classList.remove("open"));
+        pipelineModal.addEventListener("click", (e) => {
+            if (e.target === pipelineModal) pipelineModal.classList.remove("open");
+        });
+
+        // Tab Navigation
+        pipelineTabs.forEach(tab => {
+            tab.addEventListener("click", () => {
+                pipelineTabs.forEach(t => t.classList.remove("active"));
+                pipelineTabContents.forEach(c => c.classList.remove("active"));
+                tab.classList.add("active");
+                const targetId = tab.dataset.target;
+                const content = document.getElementById(targetId);
+                if (content) content.classList.add("active");
+            });
+        });
+
+        // Coherence range display
+        ctrlCoherence.addEventListener("input", () => {
+            ctrlCoherenceVal.textContent = parseFloat(ctrlCoherence.value).toFixed(2);
+        });
+
+        // Auto-fill BBox from current Map View
+        btnFillMapBbox.addEventListener("click", () => {
+            const span = Math.max(0.8, 360 / Math.pow(2, mapView.zoom));
+            const w = Math.max(-180, (mapView.lng - span / 2).toFixed(3));
+            const s = Math.max(-90, (mapView.lat - span / 4).toFixed(3));
+            const e = Math.min(180, (mapView.lng + span / 2).toFixed(3));
+            const n = Math.min(90, (mapView.lat + span / 4).toFixed(3));
+
+            ctrlBboxWest.value = w;
+            ctrlBboxSouth.value = s;
+            ctrlBboxEast.value = e;
+            ctrlBboxNorth.value = n;
+            logConsole(`Captured active map viewport: [${w}, ${s}, ${e}, ${n}]`, "success");
+        });
+
+        // Tectonic zone preset bbox buttons
+        document.querySelectorAll(".zone-preset").forEach(btn => {
+            btn.addEventListener("click", () => {
+                ctrlBboxWest.value  = btn.dataset.w;
+                ctrlBboxSouth.value = btn.dataset.s;
+                ctrlBboxEast.value  = btn.dataset.e;
+                ctrlBboxNorth.value = btn.dataset.n;
+                // Highlight the active preset
+                document.querySelectorAll(".zone-preset").forEach(b => b.style.boxShadow = "");
+                btn.style.boxShadow = "0 0 0 2px #54C7EC";
+                logConsole(`Zone preset: ${btn.textContent.trim()} [${btn.dataset.w}, ${btn.dataset.s}, ${btn.dataset.e}, ${btn.dataset.n}]`, "success");
+                // Pan the map to the zone center
+                const lat = (parseFloat(btn.dataset.s) + parseFloat(btn.dataset.n)) / 2;
+                const lng = (parseFloat(btn.dataset.w) + parseFloat(btn.dataset.e)) / 2;
+                mapFrame.contentWindow.postMessage({ type: "set-view", lat, lng, zoom: 7 }, "*");
+            });
+        });
+
+        // Check Earthdata Token
+        const checkTokenStatus = async () => {
+            try {
+                const res = await fetch(`${API_BASE}/api/token-status`);
+                if (!res.ok) return;
+                const data = await safeJson(res);
+                if (data.configured) {
+                    tokenStatusPill.className = "badge";
+                    tokenStatusPill.style.background = "#065f46";
+                    tokenStatusPill.style.color = "#34d399";
+                    tokenStatusPill.textContent = `Configured (${data.masked_token})`;
+                } else {
+                    tokenStatusPill.className = "badge";
+                    tokenStatusPill.style.background = "#7f1d1d";
+                    tokenStatusPill.style.color = "#f87171";
+                    tokenStatusPill.textContent = "Missing (Downloads Disabled)";
+                }
+            } catch (err) {
+                tokenStatusPill.textContent = "Offline Server";
+            }
+        };
+
+        // Save Token
+        btnSaveToken.addEventListener("click", async () => {
+            const token = ctrlTokenInput.value.trim();
+            if (!token) {
+                logConsole("Please paste a valid Earthdata token", "error");
+                return;
+            }
+            try {
+                logConsole("Saving Earthdata token securely...", "info");
+                const res = await fetch(`${API_BASE}/api/save-token`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ token })
+                });
+                const data = await safeJson(res);
+                if (data.success) {
+                    logConsole(data.message, "success");
+                    ctrlTokenInput.value = "";
+                    checkTokenStatus();
+                } else {
+                    logConsole(data.error || "Failed to save token", "error");
+                }
+            } catch (err) {
+                logConsole(`Error: ${err.message}`, "error");
+            }
+        });
+
+        // Run Earthquake Auto-Trigger
+        btnRunTrigger.addEventListener("click", async () => {
+            const feed = document.getElementById("ctrl-trigger-feed").value;
+            const min_mag = parseFloat(document.getElementById("ctrl-trigger-mag").value) || 4.5;
+            const radius_deg = parseFloat(document.getElementById("ctrl-trigger-radius").value) || 1.0;
+            const window_days = parseInt(document.getElementById("ctrl-trigger-window").value) || 12;
+
+            logConsole(`Scanning USGS '${feed}' for earthquakes M >= ${min_mag}...`, "info");
+            try {
+                const res = await fetch(`${API_BASE}/api/trigger-search`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ feed, min_mag, radius_deg, window_days })
+                });
+                const data = await safeJson(res);
+                if (data.success) {
+                    logConsole(data.message, "success");
+                    if (data.target_event) {
+                        const tgt = data.target_event;
+                        logConsole(`Epicenter: ${tgt.epicenter.latitude}°N, ${tgt.epicenter.longitude}°E (${tgt.place})`, "info");
+                        logConsole(`Co-seismic window: ${tgt.temporal_window.start_date} to ${tgt.temporal_window.end_date}`, "info");
+                        logConsole(`Matched ${tgt.matching_granules_count} NISAR GUNW granule(s).`, "success");
+                    }
+                } else {
+                    logConsole(data.error || "Trigger search failed", "error");
+                }
+            } catch (err) {
+                logConsole(`Error connecting to backend: ${err.message}`, "error");
+            }
+        });
+
+        // Run NASA ASF Search / Download
+        btnRunSearch.addEventListener("click", async () => {
+            const west = ctrlBboxWest.value;
+            const south = ctrlBboxSouth.value;
+            const east = ctrlBboxEast.value;
+            const north = ctrlBboxNorth.value;
+            const start_date = ctrlStartDate.value;
+            const end_date = ctrlEndDate.value;
+            const orbit_direction = ctrlOrbitDir.value;
+            const maturity = ctrlMaturity.value;
+            const isDryRun = ctrlDryRun.checked;
+            const latestPairOnly = ctrlLatestPairOnly.checked;
+            const maxGranulesVal = document.getElementById("ctrl-granule-limit")?.value || "1";
+            const max_granules = maxGranulesVal === "all" ? "all" : parseInt(maxGranulesVal, 10);
+
+            if (isDryRun) {
+                logConsole(`[Dry-Run] Searching NASA ASF for NISAR granules in [${west}, ${south}, ${east}, ${north}]...`, "info");
+                try {
+                    const res = await fetch(`${API_BASE}/api/search-nisar`, {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ west, south, east, north, start_date, end_date, orbit_direction, maturity, clip_faults: true })
+                    });
+                    const data = await safeJson(res);
+                    if (data.success) {
+                        logConsole(`Found ${data.count} matching NISAR granule(s). Faults clipped automatically.`, "success");
+                        (data.products || []).slice(0, 5).forEach(p => {
+                            logConsole(`  • ${p.fileName} (${p.flightDirection || 'N/A'}, ${p.sizeMB} MB)`, "info");
+                        });
+                        if (data.count > 5) {
+                            logConsole(`  ... and ${data.count - 5} more granules.`, "info");
+                        }
+                        logConsole("Dry run completed. Uncheck 'Dry-Run Only' to download & generate map overlay.", "info");
+                    } else {
+                        logConsole(data.error || "ASF search error", "error");
+                    }
+                } catch (err) {
+                    logConsole(`Error querying ASF API: ${err.message}`, "error");
+                }
+            } else {
+                const endpoint = `${API_BASE}/api/remote-process`;
+                const modeLabel = "⚡ Remote Cloud Processing (Range Streaming)";
+
+                logConsole(`[${modeLabel}] Target area [${west}, ${south}, ${east}, ${north}]...`, "info");
+                btnRunSearch.disabled = true;
+
+                const progressContainer = document.getElementById("progress-container");
+                const progressFill = document.getElementById("progress-bar-fill");
+                const progressPercent = document.getElementById("progress-percent-badge");
+                const progressStatus = document.getElementById("progress-status-text");
+                const progressDetail = document.getElementById("progress-detail-text");
+
+                const trackJob = (jobId) => {
+                    progressContainer.style.display = "block";
+                    progressFill.style.width = "4%";
+                    progressFill.style.background = "linear-gradient(90deg, #1B84AD, #54C7EC, #10b981)";
+                    progressPercent.textContent = "4%";
+                    progressStatus.innerHTML = `<span class="spinner" style="display:inline-block; width:10px; height:10px; border:2px solid #54C7EC; border-top-color:transparent; border-radius:50%; animation:spin 0.8s linear infinite;"></span> Connecting to NASA Cloud...`;
+                    progressDetail.textContent = `Job ID: ${jobId}`;
+
+                    let eventSource = null;
+                    let pollTimer = null;
+
+                    const cleanup = () => {
+                        if (eventSource) {
+                            eventSource.close();
+                            eventSource = null;
+                        }
+                        if (pollTimer) {
+                            clearInterval(pollTimer);
+                            pollTimer = null;
+                        }
+                        btnRunSearch.disabled = false;
+                    };
+
+                    const updateUI = (step, pct, detail) => {
+                        if (typeof pct === "number" && pct >= 0) {
+                            const clamped = Math.min(100, Math.max(0, pct));
+                            progressFill.style.width = `${clamped}%`;
+                            progressPercent.textContent = `${clamped}%`;
+                        }
+                        if (detail) {
+                            progressDetail.textContent = detail;
+                            logConsole(detail, step === "error" ? "error" : (step === "done" ? "success" : "info"));
+                        }
+                        if (step === "streaming") {
+                            progressStatus.innerHTML = `⚡ Streaming remote HDF5 bands (~85% data saved)...`;
+                        } else if (step === "downloading") {
+                            progressStatus.innerHTML = `⬇️ Multi-Thread Parallel Download (4x Speed)...`;
+                        } else if (step === "extracting" || step === "extract") {
+                            progressStatus.innerHTML = `🔍 Extracting phase & coherence grids...`;
+                        } else if (step === "processing" || step === "process") {
+                            progressStatus.innerHTML = `⚙️ Generating deformation GeoTIFF...`;
+                        } else if (step === "overlay") {
+                            progressStatus.innerHTML = `🗺️ Building deformation mosaic...`;
+                        } else if (step === "done") {
+                            progressStatus.innerHTML = `✅ Processing Complete!`;
+                            progressFill.style.width = "100%";
+                            progressPercent.textContent = "100%";
+                            cleanup();
+                            logConsole("Refreshing map layers with newly generated deformation overlay...", "success");
+                            setTimeout(() => {
+                                const mapFrame = document.getElementById("map-frame");
+                                if (mapFrame) mapFrame.src = mapFrame.src;
+                            }, 1500);
+                        } else if (step === "error") {
+                            progressStatus.innerHTML = `❌ Processing Failed`;
+                            progressFill.style.background = "#ef4444";
+                            cleanup();
+                        }
+                    };
+
+                    let finished = false;
+                    let seenLogLines = 0;
+                    let pollFailures = 0;
+                    const MAX_POLL_FAILURES = 5;
+
+                    // Terminal steps ("done"/"error") run cleanup() inside updateUI, which also
+                    // schedules the map reload, so the pollers must not do that a second time.
+                    const finish = (step, pct, detail) => {
+                        if (finished) return;
+                        finished = true;
+                        updateUI(step, pct, detail);
+                    };
+
+                    const startPolling = () => {
+                        if (pollTimer || finished) return;
+                        btnRunSearch.disabled = true;
+                        pollTimer = setInterval(async () => {
+                            try {
+                                const r = await fetch(`${API_BASE}/api/job-status/${jobId}`);
+                                if (r.status === 404) {
+                                    // The server forgot this job (restart or expiry): stop for good.
+                                    finish("error", 0, "Lost track of the job - the server no longer knows it. Run the search again.");
+                                    return;
+                                }
+                                if (!r.ok) throw new Error(`HTTP ${r.status}`);
+                                pollFailures = 0;
+                                const j = await safeJson(r);
+                                const log = Array.isArray(j.log) ? j.log : [];
+                                // Only show lines we have not shown yet.
+                                const fresh = log.slice(seenLogLines);
+                                seenLogLines = log.length;
+                                if (j.done) {
+                                    fresh.slice(0, -1).forEach((line) => logConsole(line, "info"));
+                                    finish(j.error ? "error" : "done", j.pct, fresh.length ? fresh[fresh.length - 1] : (j.error || ""));
+                                } else {
+                                    fresh.forEach((line) => logConsole(line, "info"));
+                                    updateUI(j.status, j.pct, "");
+                                    if (fresh.length) progressDetail.textContent = fresh[fresh.length - 1];
+                                }
+                            } catch (e) {
+                                console.error("Polling error", e);
+                                if (++pollFailures >= MAX_POLL_FAILURES) {
+                                    finish("error", 0, "Lost connection to the server while tracking the job.");
+                                }
+                            }
+                        }, 1200);
+                    };
+
+                    try {
+                        eventSource = new EventSource(`${API_BASE}/api/job-progress/${jobId}`);
+                        eventSource.onmessage = (event) => {
+                            try {
+                                const msg = JSON.parse(event.data);
+                                if (msg.step === "done" || msg.step === "error") {
+                                    finish(msg.step, msg.pct, msg.detail);
+                                } else if (!finished) {
+                                    updateUI(msg.step, msg.pct, msg.detail);
+                                }
+                            } catch (e) {
+                                console.error("Progress JSON parse error", e);
+                            }
+                        };
+                        eventSource.onerror = () => {
+                            if (finished) return;
+                            // Stream dropped: switch to polling, which resumes from the full log.
+                            if (eventSource) {
+                                eventSource.close();
+                                eventSource = null;
+                            }
+                            startPolling();
+                        };
+                    } catch (err) {
+                        console.warn("EventSource init failed, falling back to polling", err);
+                        startPolling();
+                    }
+                };
+
+                try {
+                    const res = await fetch(endpoint, {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                            west, south, east, north,
+                            start_date, end_date,
+                            orbit_direction, maturity,
+                            latest_pair: latestPairOnly,
+                            max_granules: max_granules
+                        })
+                    });
+                    const data = await safeJson(res);
+                    if ((res.status === 202 || res.status === 200) && data.job_id) {
+                        logConsole(`Job queued (${data.granules} granule(s)). Tracking progress...`, "info");
+                        trackJob(data.job_id);
+                    } else if (data.success && !data.job_id) {
+                        logConsole(data.message, "success");
+                        btnRunSearch.disabled = false;
+                        setTimeout(() => {
+                            const mapFrame = document.getElementById("map-frame");
+                            if (mapFrame) mapFrame.src = mapFrame.src;
+                        }, 1500);
+                    } else {
+                        logConsole(data.error || "Failed to start processing", "error");
+                        btnRunSearch.disabled = false;
+                    }
+                } catch (err) {
+                    logConsole(`Request error: ${err.message}`, "error");
+                    btnRunSearch.disabled = false;
+                }
+            }
+        });
+
+        // Run Fault Clipping Only
+        btnClipFaultsOnly.addEventListener("click", async () => {
+            const west = ctrlBboxWest.value;
+            const south = ctrlBboxSouth.value;
+            const east = ctrlBboxEast.value;
+            const north = ctrlBboxNorth.value;
+
+            logConsole(`Clipping global active faults to [${west}, ${south}, ${east}, ${north}]...`, "info");
+            try {
+                const res = await fetch(`${API_BASE}/api/clip-faults`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ west, south, east, north })
+                });
+                const data = await safeJson(res);
+                if (data.success) {
+                    logConsole(`Clipped ${data.clipped_faults_count} active fault traces. Saved to ${data.file}.`, "success");
+                } else {
+                    logConsole(data.error || "Fault clipping failed", "error");
+                }
+            } catch (err) {
+                logConsole(`Error: ${err.message}`, "error");
+            }
+        });
+
+        // Reload Map Layers
+        btnRefreshMap.addEventListener("click", () => {
+            logConsole("Reloading active map layers...", "info");
+            const currentSrc = mapFrame.src;
+            mapFrame.src = currentSrc;
+        });
+    </script>
+</body>
+</html>

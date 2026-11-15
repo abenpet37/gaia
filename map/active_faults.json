@@ -1,0 +1,262 @@
+{
+  "type": "FeatureCollection",
+  "name": "Active_Tectonic_Faults",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Wonji Fault Belt (WFB)",
+        "type": "Normal / En Echelon Rift Fault",
+        "slip_rate": "4.5 mm/yr",
+        "rift_system": "Main Ethiopian Rift (East African Rift System)",
+        "hazard": "Very High - Active Holocene Volcanotectonic Zone"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [38.85, 7.80], [39.05, 8.15], [39.22, 8.45], [39.38, 8.85], [39.60, 9.25], [39.85, 9.75], [40.10, 10.20]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Western Ethiopian Rift Border Fault (Addis-Ambo-Nazeret)",
+        "type": "Major Border Fault (Normal)",
+        "slip_rate": "2.0 mm/yr",
+        "rift_system": "Main Ethiopian Rift",
+        "hazard": "High - Deep Crustal Earthquakes"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [38.10, 7.50], [38.35, 8.20], [38.55, 8.80], [38.70, 9.05], [38.90, 9.60], [39.20, 10.15], [39.50, 10.80]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Eastern Ethiopian Rift Border Fault (Asela-Sire Escarpment)",
+        "type": "Major Border Fault (Normal)",
+        "slip_rate": "2.5 mm/yr",
+        "rift_system": "Main Ethiopian Rift",
+        "hazard": "High"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [39.10, 7.40], [39.30, 7.95], [39.55, 8.40], [39.75, 8.90], [40.10, 9.50], [40.40, 10.10]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Yerer-Tullu Wellel Volcanotectonic Lineament (YTVL)",
+        "type": "Transverse Oblique-Slip Fault",
+        "slip_rate": "1.5 mm/yr",
+        "rift_system": "Central Ethiopian Plateau / Rift Junction",
+        "hazard": "Moderate to High - Proximal to Addis Ababa"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [37.20, 8.70], [37.80, 8.85], [38.50, 8.95], [38.90, 9.00], [39.40, 9.05], [40.10, 9.10]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Filwoha-Bishoftu Fault Zone",
+        "type": "Normal Fault System",
+        "slip_rate": "1.8 mm/yr",
+        "rift_system": "Addis Ababa Rift Margin",
+        "hazard": "High - Urban Seismic Hazard"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [38.65, 8.75], [38.74, 8.92], [38.78, 9.02], [38.85, 9.15], [38.95, 9.30]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Tendaho-Goba'ad Graben Faults",
+        "type": "Extensional Spreading Center",
+        "slip_rate": "8.0 - 12.0 mm/yr",
+        "rift_system": "Central Afar Triple Junction",
+        "hazard": "Very High - Dike Intrusion & Swarm Earthquakes"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [40.70, 11.20], [41.10, 11.60], [41.50, 11.85], [41.80, 11.95], [42.10, 11.80]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Dabbahu - Manda Hararo Rift Segment",
+        "type": "Incipient Oceanic Spreading Segment",
+        "slip_rate": "15.0 - 20.0 mm/yr",
+        "rift_system": "Afar Depression",
+        "hazard": "Extreme - Site of 2005 Rifting Episode"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [40.40, 12.10], [40.60, 12.45], [40.80, 12.80], [40.95, 13.10]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Erta Ale - Danakil Volcanic Rift",
+        "type": "Spreading Axis / Fissure Zone",
+        "slip_rate": "12.0 mm/yr",
+        "rift_system": "Northern Afar",
+        "hazard": "Very High"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [40.50, 13.30], [40.70, 13.60], [40.85, 13.95], [40.95, 14.30]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Gregory Rift Border Faults (Kenya Rift)",
+        "type": "Major Continental Rift Border Fault",
+        "slip_rate": "3.0 - 5.0 mm/yr",
+        "rift_system": "Eastern Branch, East African Rift",
+        "hazard": "High"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [36.20, 2.50], [36.15, 1.20], [36.05, 0.40], [36.30, -0.40], [36.45, -1.25], [36.35, -2.10], [35.90, -3.20]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Albertine Rift Fault System (Western Rift)",
+        "type": "Continental Strike-Slip / Normal Boundary",
+        "slip_rate": "3.5 mm/yr",
+        "rift_system": "Western Branch, East African Rift",
+        "hazard": "Very High - Historical M7+ Events"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [31.20, 2.20], [30.50, 1.20], [29.60, -0.20], [29.10, -1.80], [29.20, -3.20], [29.70, -4.80], [30.50, -6.50]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Red Sea Rift Axis",
+        "type": "Divergent Oceanic Ridge",
+        "slip_rate": "10.0 - 16.0 mm/yr",
+        "rift_system": "Nubia - Arabia Divergent Margin",
+        "hazard": "High - Submarine Seafloor Spreading"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [43.35, 12.60], [42.60, 14.00], [41.20, 16.00], [39.50, 18.50], [37.80, 21.00], [35.50, 24.50], [33.80, 27.50]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Gulf of Aden Spreading Ridge",
+        "type": "Mid-Ocean Ridge / Transform",
+        "slip_rate": "16.0 - 23.0 mm/yr",
+        "rift_system": "Arabia - Somalia Plate Boundary",
+        "hazard": "High"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [43.80, 11.90], [45.50, 12.30], [47.50, 12.80], [50.00, 13.50], [53.00, 14.20], [56.00, 15.00]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Dead Sea Transform Fault",
+        "type": "Sinistral Strike-Slip Fault",
+        "slip_rate": "4.0 - 5.0 mm/yr",
+        "rift_system": "Sinai Subplate - Arabia Boundary",
+        "hazard": "High - Major Historical Earthquakes"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [35.00, 29.50], [35.25, 30.50], [35.50, 31.50], [35.60, 32.50], [35.90, 33.80], [36.25, 35.50], [36.40, 36.80]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "East Anatolian Fault (EAF)",
+        "type": "Sinistral Strike-Slip Fault",
+        "slip_rate": "9.0 - 11.0 mm/yr",
+        "rift_system": "Anatolian - Arabian Plate Boundary",
+        "hazard": "Extreme - Site of 2023 M7.8/M7.6 Earthquakes"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [36.20, 36.50], [36.80, 37.20], [37.50, 37.80], [38.50, 38.40], [39.50, 38.90], [40.60, 39.30]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "North Anatolian Fault (NAF)",
+        "type": "Dextral Strike-Slip Fault",
+        "slip_rate": "24.0 mm/yr",
+        "rift_system": "Anatolian - Eurasian Plate Boundary",
+        "hazard": "Extreme - High Seismic Threat to Istanbul"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [26.50, 40.40], [28.50, 40.75], [30.50, 40.70], [33.00, 40.90], [36.00, 40.95], [39.00, 40.20], [41.00, 39.75]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "San Andreas Fault (SAF)",
+        "type": "Dextral Strike-Slip Transform Fault",
+        "slip_rate": "25.0 - 35.0 mm/yr",
+        "rift_system": "Pacific - North American Plate Boundary",
+        "hazard": "Extreme - Characteristic M7.8+ Events"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-115.60, 33.20], [-116.50, 34.00], [-117.80, 34.50], [-119.50, 35.10], [-121.00, 36.40], [-122.50, 37.80], [-123.80, 39.00], [-124.30, 40.30]
+        ]
+      }
+    }
+  ]
+}

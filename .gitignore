@@ -1,0 +1,59 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# NASA & Earthdata tokens and local secrets
+earthdata_token.txt
+*token.txt
+.env*
+
+# NISAR Large HDF5 Raw Downloads & Partials
+manipulate/data/*.h5
+manipulate/data/*.part
+manipulate/data/.nisar_maturity
+*.h5
+*.part
+
+# Generated Viewer Temp Files
+map/faults_clip.geojson
+map/viewer.html
+
+# OS and Editor Files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+.vscode/
+.idea/

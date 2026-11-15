@@ -1,0 +1,157 @@
+{
+  "case_study_id": "gofa_highlands_mudslide_2024",
+  "title": "Case Study B: Ethiopian Highlands Catastrophic Mudslide",
+  "subtitle": "Vegetated Slope Creep & Rainfall Trigger Inverted to Failure Countdown",
+  "region": "Kencho Shacha, Geze Gofa Woreda, Southern Ethiopia",
+  "coordinates": [6.315, 36.848],
+  "default_zoom": 13,
+  "hazard_type": "Hydro-Geological Debris Flow / Deep-Seated Rotational Slide",
+  "recommended_radar_band": "L-Band",
+  "recommended_radar_reason": "Dense tropical canopy causes severe C-band decorrelation (γ < 0.25); L-Band (24 cm) penetrates canopy to maintain γ > 0.75",
+  "timeline_weeks": [
+    {
+      "week_index": 1,
+      "date": "2024-05-19",
+      "phase": "Dry-Season Initial Creep",
+      "insar_displacement_cum_mm": 6.8,
+      "insar_velocity_mm_day": 0.97,
+      "inv_velocity_day_mm": 1.031,
+      "c_band_coherence": 0.22,
+      "l_band_coherence": 0.81,
+      "gpm_rainfall_72h_mm": 18.5,
+      "smap_saturation_pct": 52.0,
+      "ndvi": 0.72,
+      "risk_score": 24,
+      "risk_level": "GREEN",
+      "risk_breakdown": {
+        "insar_pts": 9.5,
+        "rainfall_pts": 7.4,
+        "smap_pts": 7.1
+      },
+      "failure_forecast": {
+        "accelerating": false,
+        "window_text": "Slope stable: creep within seasonal elastic limit"
+      },
+      "narrative": "Sub-centimeter downslope creep on 32° terraced slope. C-band radar completely decorrelated due to coffee and banana tree canopy. L-band maintains strong interferometric phase.",
+      "action": "Routine L-band SAR surveillance."
+    },
+    {
+      "week_index": 2,
+      "date": "2024-06-09",
+      "phase": "Monsoon Infiltration & Creep Acceleration",
+      "insar_displacement_cum_mm": 28.5,
+      "insar_velocity_mm_day": 1.03,
+      "inv_velocity_day_mm": 0.971,
+      "c_band_coherence": 0.18,
+      "l_band_coherence": 0.79,
+      "gpm_rainfall_72h_mm": 64.2,
+      "smap_saturation_pct": 68.5,
+      "ndvi": 0.74,
+      "risk_score": 48,
+      "risk_level": "YELLOW",
+      "risk_breakdown": {
+        "insar_pts": 22.4,
+        "rainfall_pts": 14.8,
+        "smap_pts": 10.8
+      },
+      "failure_forecast": {
+        "accelerating": false,
+        "window_text": "Accelerated creep observed; monitoring tertiary strain threshold"
+      },
+      "narrative": "Kiremt monsoon rains begin infiltrating volcanic clay soil. Tensile crown cracks begin opening above Kencho Shacha village.",
+      "action": "Field verification of tension cracks; task weekly L-band interferograms."
+    },
+    {
+      "week_index": 3,
+      "date": "2024-06-30",
+      "phase": "Tertiary Creep Initiation",
+      "insar_displacement_cum_mm": 64.2,
+      "insar_velocity_mm_day": 1.70,
+      "inv_velocity_day_mm": 0.588,
+      "c_band_coherence": 0.15,
+      "l_band_coherence": 0.76,
+      "gpm_rainfall_72h_mm": 98.0,
+      "smap_saturation_pct": 79.2,
+      "ndvi": 0.76,
+      "risk_score": 68,
+      "risk_level": "ORANGE",
+      "risk_breakdown": {
+        "insar_pts": 32.8,
+        "rainfall_pts": 21.6,
+        "smap_pts": 13.6
+      },
+      "failure_forecast": {
+        "accelerating": true,
+        "hours_to_failure_min": 310,
+        "hours_to_failure_max": 420,
+        "window_text": "WATCH: Projected failure window: 13–17 days (July 13–17, 2024)"
+      },
+      "narrative": "Inverse velocity 1/v curve demonstrates clear linear descent. Basal shear zone softening due to elevated pore-water pressure.",
+      "action": "Issue ORANGE SLIDE WATCH to Gofa Zonal Disaster Risk Management Office."
+    },
+    {
+      "week_index": 4,
+      "date": "2024-07-14",
+      "phase": "Extreme Soil Saturation (>85%)",
+      "insar_displacement_cum_mm": 138.0,
+      "insar_velocity_mm_day": 5.27,
+      "inv_velocity_day_mm": 0.190,
+      "c_band_coherence": 0.12,
+      "l_band_coherence": 0.73,
+      "gpm_rainfall_72h_mm": 142.5,
+      "smap_saturation_pct": 87.4,
+      "ndvi": 0.77,
+      "risk_score": 88,
+      "risk_level": "RED",
+      "risk_breakdown": {
+        "insar_pts": 41.5,
+        "rainfall_pts": 26.5,
+        "smap_pts": 20.0
+      },
+      "failure_forecast": {
+        "accelerating": true,
+        "hours_to_failure_min": 140,
+        "hours_to_failure_max": 185,
+        "window_text": "CRITICAL: Estimated slope failure window: 6–8 days (July 20–22, 2024)"
+      },
+      "narrative": "Severe pore-water overpressure. SMAP soil saturation exceeds critical 85% threshold. Displacement velocity increases 300% in 14 days.",
+      "action": "ORDER PREEMPTIVE EVACUATION: Relocate all households in Kencho Shacha valley floor."
+    },
+    {
+      "week_index": 5,
+      "date": "2024-07-21",
+      "phase": "Final 1/v Intercept & Catastrophic Collapse",
+      "insar_displacement_cum_mm": 320.0,
+      "insar_velocity_mm_day": 26.0,
+      "inv_velocity_day_mm": 0.038,
+      "c_band_coherence": 0.09,
+      "l_band_coherence": 0.70,
+      "gpm_rainfall_72h_mm": 194.0,
+      "smap_saturation_pct": 94.2,
+      "ndvi": 0.78,
+      "risk_score": 99,
+      "risk_level": "RED",
+      "risk_breakdown": {
+        "insar_pts": 45.0,
+        "rainfall_pts": 30.0,
+        "smap_pts": 25.0
+      },
+      "failure_forecast": {
+        "accelerating": true,
+        "hours_to_failure_min": 12,
+        "hours_to_failure_max": 24,
+        "window_text": "IMMINENT COLLAPSE: Estimated slope failure window: 12–24 hours"
+      },
+      "narrative": "Inverse velocity 1/v asymptotically hits zero. Mass fluidization of wet clayey-silty hillslope occurs, releasing massive rotational debris flow.",
+      "action": "RED CRITICAL DISASTER RESPONSE: Emergency rescue mobilization, cordoning debris zone."
+    }
+  ],
+  "impact_metrics": {
+    "total_volume_m3": 1250000,
+    "affected_village_population": 1150,
+    "infrastructure_blocked_km": 8.2,
+    "debris_runout_km": 3.4,
+    "nearest_medical_facility": "Sawla General Hospital (22.5 km NW)",
+    "local_health_post": "Kencho Shacha Health Post (Directly in Runout Path)"
+  }
+}

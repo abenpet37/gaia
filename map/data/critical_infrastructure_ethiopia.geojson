@@ -1,0 +1,253 @@
+{
+  "type": "FeatureCollection",
+  "name": "Ethiopia_Critical_Infrastructure_Exposure",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Sawla General Hospital",
+        "category": "Healthcare",
+        "type": "Zonal Referral Hospital",
+        "capacity_beds": 180,
+        "region": "Gofa Zone, SNNPR",
+        "emergency_trauma_ready": true,
+        "contact_vhf": "Ch-16 Disaster Net"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [36.784, 6.442]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Kencho Shacha Primary Health Post",
+        "category": "Healthcare",
+        "type": "Rural Health Post",
+        "capacity_beds": 8,
+        "region": "Kencho Shacha, Geze Gofa",
+        "emergency_trauma_ready": false,
+        "in_hazard_zone": true
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [36.852, 6.318]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Geze Health Center",
+        "category": "Healthcare",
+        "type": "District Health Center",
+        "capacity_beds": 24,
+        "region": "Geze Gofa Woreda",
+        "emergency_trauma_ready": true
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [36.825, 6.365]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Dubti General Hospital",
+        "category": "Healthcare",
+        "type": "Regional Referral Hospital",
+        "capacity_beds": 250,
+        "region": "Afar Regional State",
+        "emergency_trauma_ready": true
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [41.085, 11.735]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Semera Regional Referral Hospital",
+        "category": "Healthcare",
+        "type": "Tertiary Referral Hospital",
+        "capacity_beds": 320,
+        "region": "Semera, Afar",
+        "emergency_trauma_ready": true
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [41.012, 11.794]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Afdera District Clinic",
+        "category": "Healthcare",
+        "type": "Rural Clinic",
+        "capacity_beds": 12,
+        "region": "Afdera, Danakil, Afar",
+        "emergency_trauma_ready": false
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [40.912, 13.185]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Kencho Shacha Primary School & Settlement",
+        "category": "Education / Settlement",
+        "type": "Primary School & Village Center",
+        "population": 1150,
+        "region": "Geze Gofa",
+        "in_hazard_zone": true
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [36.849, 6.316]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Geze Gofa Secondary School & Evac Center",
+        "category": "Education / Settlement",
+        "type": "Designated Emergency Shelter",
+        "capacity_persons": 1800,
+        "region": "Geze Gofa Woreda",
+        "safe_zone": true
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [36.828, 6.372]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Hayli Gubbi Pastoral Encampment",
+        "category": "Settlement",
+        "type": "Nomadic Afar Pastoral Settlement",
+        "population": 780,
+        "region": "Southern Erta Ale Range, Afar",
+        "in_volcanic_hazard_corridor": true
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [40.738, 13.485]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Dodom Erta Ale Outpost & Tourist Camp",
+        "category": "Settlement",
+        "type": "Basecamp & Ranger Post",
+        "population": 120,
+        "region": "Erta Ale Volcanic Field",
+        "in_volcanic_hazard_corridor": true
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [40.582, 13.565]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "B80 Zonal Highway (Sawla - Gofa - Arba Minch)",
+        "category": "Transportation",
+        "type": "Asphalt Primary Highway",
+        "lanes": 2,
+        "importance": "Primary Humanitarian & Supply Corridor"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [36.750, 6.480],
+          [36.784, 6.442],
+          [36.815, 6.380],
+          [36.832, 6.340],
+          [36.860, 6.280],
+          [36.910, 6.210],
+          [37.050, 6.120]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Kencho Shacha Mountain Access Road",
+        "category": "Transportation",
+        "type": "Unpaved Rural Feeder Road",
+        "lanes": 1,
+        "in_hazard_zone": true
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [36.832, 6.340],
+          [36.842, 6.325],
+          [36.848, 6.315],
+          [36.855, 6.305]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "A1 National Transport Corridor (Addis - Semera - Djibouti)",
+        "category": "Transportation",
+        "type": "Strategic Import/Export Highway",
+        "lanes": 2,
+        "importance": "Handles >85% of Ethiopian International Freight"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [40.850, 11.550],
+          [40.950, 11.680],
+          [41.012, 11.794],
+          [41.150, 11.920],
+          [41.420, 12.150]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Afdera - Hayli Gubbi Desert Track",
+        "category": "Transportation",
+        "type": "Unpaved Track",
+        "lanes": 1,
+        "in_volcanic_hazard_corridor": true
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [40.912, 13.185],
+          [40.840, 13.320],
+          [40.760, 13.440],
+          [40.720, 13.510],
+          [40.680, 13.580]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Tendaho Dam & Reservoir",
+        "category": "Critical Infrastructure",
+        "type": "Earthfill Irrigation & Hydroelectric Dam",
+        "reservoir_capacity_mcm": 1860,
+        "downstream_risk": "Awash River Basin Floodplain"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [40.985, 11.682]
+      }
+    }
+  ]
+}

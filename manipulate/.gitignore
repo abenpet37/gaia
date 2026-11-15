@@ -1,0 +1,5 @@
+__pycache__/
+data/*.h5
+data/*.part
+data/.nisar_maturity
+output/*.tif

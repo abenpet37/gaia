@@ -1,0 +1,141 @@
+{
+  "case_study_id": "afar_hayli_gubbi_2025",
+  "title": "Case Study A: 2025 Afar Rifting & Hayli Gubbi Eruption",
+  "subtitle": "32 km Magma Dike Propagation & First Eruption in ~12,000 Years",
+  "region": "Afar Depression, Danakil Rift, Ethiopia",
+  "coordinates": [13.51, 40.72],
+  "default_zoom": 9,
+  "hazard_type": "Tectonic Dike Intrusion / Volcanic Eruption",
+  "recommended_radar_band": "C-Band",
+  "recommended_radar_reason": "Arid, unvegetated volcanic terrain optimal for C-Band (5.6 cm) phase coherence",
+  "timeline_weeks": [
+    {
+      "week_index": 1,
+      "date": "2025-07-06",
+      "phase": "Baseline Regional Extension",
+      "insar_extension_cum_mm": 4.2,
+      "insar_velocity_mm_week": 4.2,
+      "radar_band": "C-Band",
+      "coherence": 0.94,
+      "gpm_rainfall_72h_mm": 2.1,
+      "smap_saturation_pct": 14.5,
+      "usgs_eq_count_7d": 3,
+      "usgs_max_mag_7d": 2.6,
+      "tropomi_so2_du": 0.4,
+      "risk_score": 18,
+      "risk_level": "GREEN",
+      "risk_breakdown": {
+        "insar_pts": 10.1,
+        "eq_pts": 3.2,
+        "so2_pts": 1.6
+      },
+      "active_dike_km": 0.0,
+      "narrative": "Nominal tectonic divergence between the Nubian and Arabian plates (~16 mm/yr). Minimal seismicity and clear atmosphere.",
+      "action": "Routine satellite monitoring."
+    },
+    {
+      "week_index": 2,
+      "date": "2025-08-10",
+      "phase": "Subsurface Magma Migration at Erta Ale",
+      "insar_extension_cum_mm": 22.8,
+      "insar_velocity_mm_week": 18.6,
+      "radar_band": "C-Band",
+      "coherence": 0.93,
+      "gpm_rainfall_72h_mm": 5.4,
+      "smap_saturation_pct": 16.0,
+      "usgs_eq_count_7d": 11,
+      "usgs_max_mag_7d": 3.4,
+      "tropomi_so2_du": 1.8,
+      "risk_score": 46,
+      "risk_level": "YELLOW",
+      "risk_breakdown": {
+        "insar_pts": 23.6,
+        "eq_pts": 14.2,
+        "so2_pts": 6.8
+      },
+      "active_dike_km": 6.5,
+      "narrative": "Deep magma reservoir inflation beneath northern Erta Ale segment detected via InSAR. Small earthquake swarm clustered at 8-12 km depth.",
+      "action": "Trigger daily C-Band SAR processing; notify Ethiopian Geological Survey."
+    },
+    {
+      "week_index": 3,
+      "date": "2025-09-14",
+      "phase": "Rapid Lateral Dike Injection",
+      "insar_extension_cum_mm": 98.4,
+      "insar_velocity_mm_week": 75.6,
+      "radar_band": "C-Band",
+      "coherence": 0.91,
+      "gpm_rainfall_72h_mm": 1.0,
+      "smap_saturation_pct": 12.0,
+      "usgs_eq_count_7d": 29,
+      "usgs_max_mag_7d": 4.3,
+      "tropomi_so2_du": 4.9,
+      "risk_score": 72,
+      "risk_level": "ORANGE",
+      "risk_breakdown": {
+        "insar_pts": 38.5,
+        "eq_pts": 21.0,
+        "so2_pts": 14.2
+      },
+      "active_dike_km": 18.2,
+      "narrative": "A 18 km long magma dike is migrating rapidly southward toward Hayli Gubbi shield volcano. Crustal graben opening exceeds 75 mm in 7 days.",
+      "action": "Place regional civil protection on HIGH ALERT. Restrict vehicle traffic along Afdera-Erta Ale desert track."
+    },
+    {
+      "week_index": 4,
+      "date": "2025-10-19",
+      "phase": "Pre-Eruptive Pressurization & Gas Spike",
+      "insar_extension_cum_mm": 240.5,
+      "insar_velocity_mm_week": 142.1,
+      "radar_band": "C-Band",
+      "coherence": 0.89,
+      "gpm_rainfall_72h_mm": 0.5,
+      "smap_saturation_pct": 10.2,
+      "usgs_eq_count_7d": 54,
+      "usgs_max_mag_7d": 4.9,
+      "tropomi_so2_du": 9.8,
+      "risk_score": 89,
+      "risk_level": "RED",
+      "risk_breakdown": {
+        "insar_pts": 45.0,
+        "eq_pts": 28.5,
+        "so2_pts": 22.1
+      },
+      "active_dike_km": 28.5,
+      "narrative": "Severe surface swelling at Hayli Gubbi flank. TROPOMI detects major SO2 degassing anomaly (>9.8 DU). Shallow earthquake swarm (depth < 4 km).",
+      "action": "IMMEDIATE EVACUATION: Evacuate pastoral settlements within 15 km of Hayli Gubbi. Issue Red Civil Aviation VONA alert."
+    },
+    {
+      "week_index": 5,
+      "date": "2025-11-23",
+      "phase": "Hayli Gubbi Historic Eruption (Nov 23, 2025)",
+      "insar_extension_cum_mm": 580.0,
+      "insar_velocity_mm_week": 339.5,
+      "radar_band": "C-Band",
+      "coherence": 0.84,
+      "gpm_rainfall_72h_mm": 0.0,
+      "smap_saturation_pct": 9.5,
+      "usgs_eq_count_7d": 82,
+      "usgs_max_mag_7d": 5.2,
+      "tropomi_so2_du": 24.5,
+      "risk_score": 98,
+      "risk_level": "RED",
+      "risk_breakdown": {
+        "insar_pts": 45.0,
+        "eq_pts": 30.0,
+        "so2_pts": 25.0
+      },
+      "active_dike_km": 32.4,
+      "narrative": "FISSURE ERUPTION CONFIRMED: Hayli Gubbi breaches after ~12,000 years. Effusive basaltic lava fountains and 10 km ash/gas column.",
+      "action": "Full emergency disaster response active. Airspace closed. Safe zone relocation to Logiya/Semera."
+    }
+  ],
+  "impact_metrics": {
+    "total_extension_m": 1.25,
+    "affected_pastoral_population": 4200,
+    "roads_at_risk_km": 38.5,
+    "dike_length_km": 32.4,
+    "nearest_medical_facility": "Afdera Primary Health Clinic (26.4 km NW)",
+    "hazard_corridor": "Erta Ale - Borale Ale - Hayli Gubbi Volcanic Axis"
+  }
+}

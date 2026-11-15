@@ -1,0 +1,25 @@
+{
+  "event_id": "us7000tyay",
+  "magnitude": 4.7,
+  "place": "east central Pacific Ocean",
+  "time": 1794695026411,
+  "time_utc": "2026-11-14T22:23:46.411000+00:00",
+  "depth_km": 10,
+  "epicenter": {
+    "latitude": 3.7323,
+    "longitude": -99.113
+  },
+  "search_bbox": {
+    "west": -100.113,
+    "south": 2.732,
+    "east": -98.113,
+    "north": 4.732
+  },
+  "temporal_window": {
+    "start_date": "2026-11-02",
+    "end_date": "2026-11-26"
+  },
+  "matching_granules_count": 0,
+  "granules": [],
+  "triggered_at": "2026-11-15T00:50:56.037669+00:00"
+}
